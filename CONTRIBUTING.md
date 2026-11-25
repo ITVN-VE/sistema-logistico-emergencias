@@ -44,7 +44,15 @@ Los nombres van en minúsculas y con guiones, sin tildes ni eñes.
 
 ### Commits
 
-- El mensaje empieza con un verbo en infinitivo y describe el cambio: *"Añadir ADR-0003: tecnología de la aplicación"*, *"Corregir enlace al planteamiento"*.
+El mensaje empieza con un prefijo que indica el tipo de cambio, en minúsculas y seguido de dos puntos, y después una descripción breve en español:
+
+| Prefijo | Para qué | Ejemplo |
+|---|---|---|
+| `add:` | Añadir algo nuevo | `add: ADR-0003 tecnología de la aplicación` |
+| `update:` | Modificar algo que ya existe | `update: preguntas abiertas del ADR-0001` |
+| `fix:` | Corregir un error | `fix: enlace roto al planteamiento` |
+| `remove:` | Eliminar algo | `remove: diagrama que ya no se usa` |
+
 - Un commit por cada cambio lógico, no uno solo con todo.
 - Si hace falta explicar el porqué, se deja una línea en blanco después del título y se explica debajo.
 
