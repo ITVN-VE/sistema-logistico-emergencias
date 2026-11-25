@@ -1,0 +1,69 @@
+% Réplica con cambio manual (ADR-0002): funcionamiento normal, fallo de la
+% computadora y regreso de la computadora como réplica.
+\documentclass[tikz,border=0pt]{standalone}
+\input{estilo}
+
+% \telefonos{prefijo}{nodo servidor}: tres voluntarios conectados al servidor.
+\newcommand{\telefonos}[2]{
+  \foreach \i/\x in {1/0.3, 2/2.15, 3/4.0} {
+    \node[equipo, minimum width=1.7cm, minimum height=1.3cm] (#1t\i) at (\x,-3.3)
+      {{\Large\faMobile*}\\[2pt]Voluntario};
+    \draw[enlace] (#2.south) -- (#1t\i.north);
+  }
+}
+
+\begin{document}
+\begin{tikzpicture}[diagrama]
+  \tikzset{equipo/.append style={minimum width=2.9cm}}
+
+  % 1. Funcionamiento normal.
+  \begin{scope}
+    \coordinate (arriba1) at (2.15,1.55);
+    \node[equipo] (a1) at (0,0)
+      {\equipotexto{\faLaptop}{Servidor principal}{Computadora\\Turno 1}};
+    \node[equipo=naranja] (b1) at (4.3,0)
+      {\equipotexto{\faIcon{tablet-alt}}{Réplica}{Tablet del coordinador\\Turno 1}};
+    \draw[copia] (a1.east) -- (b1.west);
+    \node[etiqueta, text=naranja, anchor=south] at ($(a1.north east)!0.5!(b1.north west)$) {Copia cada cambio};
+    \telefonos{p1}{a1}
+    \node[nota] (n1) at (2.15,-5.1) {Los voluntarios trabajan con la computadora.\\Cada registro se copia en la tablet.};
+    \begin{pgfonlayer}{zonas}
+      \node[zona, fit=(arriba1) (a1) (b1) (p1t1) (p1t3) (n1)] (z1) {};
+    \end{pgfonlayer}
+    \node[titulozona=texto] at (z1.north west) {1. Funcionamiento normal};
+  \end{scope}
+
+  % 2. Se apaga la computadora.
+  \begin{scope}[xshift=8.7cm]
+    \coordinate (arriba2) at (2.15,1.55);
+    \node[equipo=gris, dashed, text=gris] (a2) at (0,0)
+      {\equipotexto{\faPowerOff}{Computadora}{Apagada\\o sin batería}};
+    \node[equipo] (b2) at (4.3,0)
+      {\equipotexto{\faIcon{tablet-alt}}{Nuevo servidor}{Tablet del coordinador\\Turno 2}};
+    \telefonos{p2}{b2}
+    \node[nota=azul] (n2) at (2.15,-5.1) {\faHandPointer\ El coordinador pulsa «Convertir en servidor».\\Los voluntarios pasan a trabajar con la tablet.};
+    \begin{pgfonlayer}{zonas}
+      \node[zona, fit=(arriba2) (a2) (b2) (p2t1) (p2t3) (n2)] (z2) {};
+    \end{pgfonlayer}
+    \node[titulozona=texto] at (z2.north west) {2. Se apaga la computadora};
+  \end{scope}
+
+  % 3. Vuelve la computadora.
+  \begin{scope}[xshift=17.4cm]
+    \coordinate (arriba3) at (2.15,1.55);
+    \node[equipo=naranja] (a3) at (0,0)
+      {\equipotexto{\faLaptop}{Réplica}{Computadora\\Turno 2}};
+    \node[equipo] (b3) at (4.3,0)
+      {\equipotexto{\faIcon{tablet-alt}}{Servidor}{Tablet del coordinador\\Turno 2}};
+    \draw[copia] (b3.west) -- (a3.east);
+    \node[etiqueta, text=naranja, anchor=south] at ($(a3.north east)!0.5!(b3.north west)$) {Se pone al día};
+    \telefonos{p3}{b3}
+    \node[nota] (n3) at (2.15,-5.1) {La computadora ve un turno mayor que el suyo,\\deja de aceptar registros y pasa a ser réplica.};
+    \begin{pgfonlayer}{zonas}
+      \node[zona, fit=(arriba3) (a3) (b3) (p3t1) (p3t3) (n3)] (z3) {};
+    \end{pgfonlayer}
+    \node[titulozona=texto] at (z3.north west) {3. Vuelve la computadora};
+  \end{scope}
+
+\end{tikzpicture}
+\end{document}
