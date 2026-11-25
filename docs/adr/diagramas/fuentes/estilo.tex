@@ -1,0 +1,52 @@
+% Estilo común de los diagramas de los ADR.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[sfdefault]{FiraSans}
+\usepackage{fontawesome5}
+\usetikzlibrary{positioning,backgrounds,fit,arrows.meta,calc}
+
+% Capa para los recuadros de zona: encima del fondo blanco y debajo de los equipos.
+\pgfdeclarelayer{zonas}
+\pgfsetlayers{background,zonas,main}
+
+\definecolor{texto}{HTML}{262626}
+\definecolor{azul}{HTML}{1F4E79}
+\definecolor{naranja}{HTML}{C55A11}
+\definecolor{gris}{HTML}{8C8C8C}
+
+\tikzset{
+  % Se aplica en cada tikzpicture: fondo blanco para que se lea en modo oscuro.
+  diagrama/.style={
+    font=\small, color=texto,
+    background rectangle/.style={fill=white},
+    show background rectangle, inner frame sep=14pt,
+  },
+  % Dispositivo con icono, título y descripción opcional.
+  equipo/.style={
+    draw=#1, fill=#1!10, line width=0.9pt, rounded corners=5pt,
+    align=center, font=\footnotesize, inner sep=6pt, minimum width=3.1cm, minimum height=1.9cm,
+  },
+  equipo/.default=azul,
+  % Recuadro que agrupa los equipos de un centro o una etapa.
+  zona/.style={
+    draw=#1, line width=0.8pt, rounded corners=8pt, inner sep=12pt,
+  },
+  zona/.default=gris,
+  titulozona/.style={
+    anchor=south west, font=\small\bfseries, text=#1, inner sep=3pt,
+  },
+  titulozona/.default=gris,
+  enlace/.style={Latex-Latex, line width=0.9pt, draw=azul},
+  copia/.style={-Latex, line width=1.1pt, draw=naranja},
+  etiqueta/.style={font=\footnotesize, fill=white, inner sep=2pt, align=center},
+  nota/.style={
+    draw=#1, fill=#1!6, line width=0.7pt, rounded corners=4pt,
+    font=\footnotesize, align=center, inner sep=5pt,
+  },
+  nota/.default=gris,
+}
+
+% \equipotexto{icono}{título}{descripción}
+% La descripción usa el tamaño de letra del nodo, porque TikZ no conserva un cambio
+% de tamaño después de \\ ni admite \\ dentro de un grupo.
+\newcommand{\equipotexto}[3]{{\Large #1}\\[3pt]{\small\bfseries #2}\\[1pt]#3}

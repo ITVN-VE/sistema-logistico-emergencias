@@ -1,0 +1,31 @@
+% Modelo de despliegue (ADR-0001): la computadora del centro de acopio funciona
+% como servidor local y los demás dispositivos se conectan por la red local.
+\documentclass[tikz,border=0pt]{standalone}
+\input{estilo}
+
+\begin{document}
+\begin{tikzpicture}[diagrama, node distance=1.2cm and 0.6cm]
+
+  \node[equipo, minimum width=4.4cm] (servidor)
+    {\equipotexto{\faLaptop}{Servidor local}{Computadora del centro\\Los datos se guardan en ella}};
+
+  \node[equipo, below left=1.9cm and 0.4cm of servidor] (vol1)
+    {\equipotexto{\faMobile*}{Voluntario}{Teléfono, navegador}};
+  \node[equipo, below=1.9cm of servidor] (vol2)
+    {\equipotexto{\faMobile*}{Voluntario}{Teléfono, navegador}};
+  \node[equipo, below right=1.9cm and 0.4cm of servidor] (coord)
+    {\equipotexto{\faMobile*\,\faLaptop}{Coordinador}{Teléfono o computadora,\\navegador}};
+
+  \draw[enlace] (servidor.south) -- (vol1.north);
+  \draw[enlace] (servidor.south) -- (vol2.north);
+  \draw[enlace] (servidor.south) -- (coord.north);
+  \node[etiqueta, text=azul] at ($(servidor.south)!0.5!(vol2.north)$)
+    {\faWifi\ Red local (Wi-Fi), sin internet};
+
+  \begin{pgfonlayer}{zonas}
+    \node[zona=azul, fit=(servidor) (vol1) (vol2) (coord)] (centro) {};
+  \end{pgfonlayer}
+  \node[titulozona=azul] at (centro.north west) {Centro de acopio};
+
+\end{tikzpicture}
+\end{document}

@@ -34,14 +34,17 @@ Se desarrollarán por etapas:
 
 - [Planteamiento del problema y propuesta (español)](docs/planteamiento.md)
 - [Problem statement and proposal (English)](docs/proposal-en.md)
+- [Decisiones de arquitectura](docs/adr/README.md)
 
 ## Base tecnológica
 
-Para no reinventar la rueda, el sistema de inventario partirá previsiblemente de una solución de código abierto existente, adaptada al contexto venezolano. Actualmente se está evaluando [Boxtribute](https://github.com/boxwise/boxtribute), un sistema de inventario y distribución para ayuda humanitaria desarrollado por Stichting Boxwise y publicado bajo la licencia Apache-2.0.
+El sistema de inventario debe funcionar sin internet: cada centro de acopio lo instala en una computadora, que funciona como servidor local, y los voluntarios se conectan a ella desde el navegador de sus teléfonos por la red local. Esta propuesta se explica en el [ADR-0001: Modelo de despliegue](docs/adr/0001-modelo-de-despliegue.md).
+
+Sistemas existentes como [Boxtribute](https://github.com/boxwise/boxtribute), desarrollado por Stichting Boxwise, se toman como referencia por su modelo de datos y su experiencia en ayuda humanitaria. La tecnología concreta se decidirá en un próximo ADR.
 
 ## Cómo participar
 
-El proyecto busca centros de acopio que quieran contar su experiencia, desarrolladores y organizaciones que trabajen en emergencias. Si te interesa, abre un *issue* en este repositorio.
+El proyecto busca centros de acopio que quieran contar su experiencia, desarrolladores y organizaciones que trabajen en emergencias. Lee la [guía para participar](CONTRIBUTING.md) o abre un *issue* en este repositorio.
 
 ## Licencia
 
@@ -61,6 +64,6 @@ The system has three components, developed in stages:
 2. **A central system** that consolidates and publishes the information of all centers.
 3. **Transport tracking**: driver, vehicle, route checkpoints and approximate cost.
 
-The project is currently in Phase I (problem statement and proposal) and is starting its research phase. The inventory system will most likely build on an existing open-source solution; [Boxtribute](https://github.com/boxwise/boxtribute) is currently being evaluated.
+The project is currently in Phase I (problem statement and proposal) and is starting its research phase. The inventory system must work without internet: each collection center installs it on a computer that acts as a local server, and volunteers connect to it from their phones' browsers over the local network. Existing systems such as [Boxtribute](https://github.com/boxwise/boxtribute) serve as a reference for the data model.
 
 Read the full document: [Problem statement and proposal](docs/proposal-en.md).
