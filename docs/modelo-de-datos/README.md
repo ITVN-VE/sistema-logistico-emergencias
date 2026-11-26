@@ -4,13 +4,21 @@ Esta carpeta describe qué información guarda cada parte del sistema y cómo se
 
 Las decisiones que tuvieron alternativas razonables se explican en los [ADR](../adr/README.md). Aquí se describe el resultado.
 
+## El esquema
+
+El archivo [`esquema.dbml`](esquema.dbml) define todas las tablas, sus campos, las listas de valores y las relaciones. Está escrito en [DBML](https://dbml.dbdiagram.io/docs/) (*Database Markup Language*), un lenguaje de texto para describir bases de datos.
+
+- **Es la fuente del modelo.** Los documentos de esta carpeta explican el esquema en lenguaje sencillo, pero la definición exacta está en el esquema. Si cambia una tabla, se actualizan en el mismo *pull request* el esquema y el documento que la explica.
+- **Para verlo como diagrama**, se copia el contenido del archivo y se pega en [dbdiagram.io](https://dbdiagram.io). Ahí se pueden mover las tablas y ver cómo se relacionan.
+- Como es texto, en cada *pull request* se ve exactamente qué tabla o campo cambió.
+
 ## Documentos
 
 | Documento | Qué describe | Sistema |
 |---|---|---|
 | [Centro y usuarios](centro-y-usuarios.md) | El centro de acopio, las personas que usan el sistema y la lista de entidades federales. | Inventario |
 
-Para añadir uno nuevo, se crea un archivo en esta carpeta, con un nombre que diga qué parte del modelo describe, y se agrega una fila a esta tabla.
+Para añadir uno nuevo, se crea un archivo en esta carpeta, con un nombre que diga qué parte del modelo describe, se agregan sus tablas al esquema y se añade una fila a esta tabla.
 
 ## Principios
 

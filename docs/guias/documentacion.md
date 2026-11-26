@@ -18,6 +18,7 @@ sistema-logistico-emergencias/
     │   └── 0001-….md
     ├── modelo-de-datos/       ← qué información guarda el sistema
     │   ├── README.md          ← principios, convenciones e índice
+    │   ├── esquema.dbml       ← definición exacta de las tablas
     │   └── centro-y-usuarios.md
     ├── diagramas/             ← imágenes de todos los documentos
     └── guias/                 ← cómo se trabaja en el proyecto
@@ -31,7 +32,7 @@ sistema-logistico-emergencias/
 | **Guía de contribución** | `CONTRIBUTING.md` | Explicar cómo participar y cómo se trabaja. | Cuando cambia la forma de trabajar. |
 | **Planteamiento** | `docs/planteamiento.md` | Explicar el problema, los objetivos, el alcance y las preguntas abiertas. | Al cerrar cada fase del proyecto. |
 | **Decisiones de arquitectura (ADR)** | `docs/adr/` | Dejar por escrito por qué el sistema está hecho como está. | Una por cada decisión importante. |
-| **Modelo de datos** | `docs/modelo-de-datos/` | Describir qué información guarda el sistema, en qué tablas y con qué campos. Un documento por cada parte del modelo. | Cada vez que se diseña o cambia una tabla. |
+| **Modelo de datos** | `docs/modelo-de-datos/` | Describir qué información guarda el sistema, en qué tablas y con qué campos. Un esquema en DBML y un documento que explica cada parte del modelo. | Cada vez que se diseña o cambia una tabla. |
 | **Guías** | `docs/guias/` | Explicar normas y procedimientos del proyecto. | Cuando cambia la norma. |
 | **Tareas, errores e ideas** | *Issues* de GitHub | Saber qué hay que hacer, quién lo hace y en qué estado está. | Continuamente. |
 | **Discusión de cada cambio** | *Pull requests* de GitHub | Revisar cada cambio antes de incorporarlo. | En cada cambio. |
@@ -59,23 +60,23 @@ Si un documento no encaja en ninguno de estos tipos, conviene proponerlo en un *
 
 Solo se hace un diagrama cuando ayuda a entender algo que el texto no explica bien. Si basta con el texto o con una tabla, no hace falta.
 
+Las tablas del modelo de datos no se dibujan a mano: se definen en el [esquema](../modelo-de-datos/README.md#el-esquema) y se ven como diagrama en dbdiagram.io. Así no hay dos versiones del modelo que puedan dejar de coincidir.
+
 Los diagramas de todos los documentos se guardan juntos:
 
 ```
 docs/diagramas/
 ├── despliegue.png        ← las imágenes que se ven en los documentos
-├── centro-y-usuarios.png
 ├── replica.png
 └── fuentes/              ← lo necesario para editarlas
     ├── build.sh
     ├── estilo.tex
     ├── despliegue.tex
-    ├── centro-y-usuarios.tex
     └── replica.tex
 ```
 
 - Cada diagrama se hace en LaTeX con TikZ, en un archivo `.tex` dentro de `fuentes/`, con el mismo nombre que su imagen.
-- Todos usan el estilo común de `estilo.tex` (colores, tipo de letra, iconos y tablas del modelo de datos), para que se vean iguales. El azul se usa para los servidores, la red local y las tablas, el naranja para las réplicas y el gris para lo inactivo, secundario o fijo.
+- Todos usan el estilo común de `estilo.tex` (colores, tipo de letra e iconos), para que se vean iguales. El azul se usa para los servidores y la red local, el naranja para las réplicas y el gris para lo inactivo o secundario.
 - Para generar las imágenes se ejecuta `docs/diagramas/fuentes/build.sh`. Crea un `.png` por diagrama en `diagramas/`, con fondo blanco para que se lea también en el modo oscuro de GitHub. Para generar solo uno: `build.sh replica`.
 - En el documento se enlaza el `.png` con una ruta relativa, por ejemplo desde un ADR: `![Descripción del diagrama](../diagramas/nombre.png)`. La descripción entre corchetes es obligatoria, porque es lo que leen los lectores de pantalla.
 - Se suben al repositorio los `.tex` y los `.png`. La carpeta `fuentes/build/` se genera al compilar y no se sube.
