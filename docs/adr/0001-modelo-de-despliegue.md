@@ -124,6 +124,14 @@ Este ADR decide el **modelo de despliegue**, no la tecnología concreta. La tecn
 
 La decisión queda en estado **Propuesto** hasta validar en las entrevistas con centros de acopio las preguntas abiertas de abajo.
 
+### Por qué sin depender de internet
+
+La mayoría de los sistemas de inventario humanitario, como Boxtribute o Sahana Eden, funcionan en un servidor en internet. Es lo más sencillo: hay una sola base de datos, las actualizaciones llegan a todos a la vez, el soporte se hace a distancia y se ve lo que pasa en todos los centros en tiempo real. Trabajar sin conexión lo hacen sobre todo las herramientas de recolección de datos (ODK, KoboToolbox) y algunos sistemas como Open mSupply.
+
+Este proyecto elige no depender de internet porque, en los centros de acopio, la falta de conexión no es una excepción: es una condición frecuente, incluso sin desastre, y los desastres cortan las comunicaciones justo en las zonas afectadas (planteamiento, sección 7). Un sistema que deja de funcionar sin internet falla precisamente cuando más se necesita.
+
+**No depender de internet no significa trabajar siempre sin internet.** El centro trabaja con o sin conexión, y en la segunda etapa, cuando haya conexión, enviará sus datos al sistema central. Se aceptan a cambio los costos que se detallan en *Consecuencias*.
+
 ## Consecuencias
 
 - **Positivas:**
@@ -135,10 +143,17 @@ La decisión queda en estado **Propuesto** hasta validar en las entrevistas con 
   - El esfuerzo de desarrollo es mayor que con un único servidor en internet.
   - Hay que dar soporte a varios sistemas operativos (Windows, y posiblemente Linux, macOS y Android).
   - Cada centro es responsable de la computadora donde está su inventario.
+  - **Trabajar sin conexión añade complejidad**: copias que hay que mantener al día, recuperación cuando falla un equipo y, en la segunda etapa, el envío de datos al sistema central.
+  - **Las actualizaciones no llegan solas**, y puede haber centros con versiones distintas del sistema al mismo tiempo.
+  - **El soporte a distancia es difícil**: si algo falla en un centro sin internet, solo se sabe si alguien lo cuenta.
+  - **Fuera del centro, los datos llegan con retraso.** Hasta que exista el sistema central, nadie de fuera ve el inventario de un centro, y después solo lo verá cuando el centro tenga conexión.
 - **Riesgos y cómo mitigarlos:**
   - **Pérdida o daño de la computadora:** ofrecer copias de seguridad en un pendrive. Cómo sigue trabajando el centro cuando falla su servidor local, y cómo se recupera, se trata en el [ADR-0002](0002-continuidad-del-servidor-local.md).
   - **Cortes eléctricos:** preferir portátiles con batería y que la aplicación consuma poco. Si la computadora se apaga, otro dispositivo puede tomar su lugar como servidor ([ADR-0002](0002-continuidad-del-servidor-local.md)).
   - **Funciones del navegador que exigen HTTPS:** no depender de ellas en la primera etapa. La protección de la conexión se trata en el [ADR-0004](0004-red-local-del-centro.md).
+  - **La complejidad de trabajar sin conexión retrasa el proyecto:** mantenerla acotada a propósito. Un solo servidor por centro, para que dentro del centro no haya conflictos; una réplica con cambio manual ([ADR-0002](0002-continuidad-del-servidor-local.md)); movimientos de inventario que solo se añaden y nunca se sobrescriben, para que juntar los datos de varios equipos sea sumarlos; y el sistema central en una etapa posterior.
+  - **Centros con versiones distintas:** mostrar la versión en la aplicación, permitir actualizar desde un pendrive y guardar la versión del formato de los datos, para que una versión nueva sepa leer los datos de una anterior.
+  - **Datos atrasados al coordinar entre centros:** que cada registro guarde cuándo ocurrió, para que el sistema central sepa qué tan actual es la información de cada centro.
   - **Acceso no autorizado desde la red local:** exigir una cuenta personal con PIN o contraseña para cada persona, gestionada desde el propio centro ([ADR-0003](0003-usuarios-y-acceso.md)).
 
 ## Preguntas abiertas
@@ -155,6 +170,7 @@ Se resolverán en las entrevistas con centros de acopio y con prototipos:
 
 - [Planteamiento del problema y propuesta](../planteamiento.md)
 - [Open mSupply: diseño técnico](https://msupply.foundation/open-msupply/design). Sistema que sigue el modelo de la opción D. Su licencia limita el uso a servicios de salud, por lo que se toma como referencia de arquitectura y no como base.
+- [ODK](https://getodk.org) y [KoboToolbox](https://www.kobotoolbox.org). Herramientas de recolección de datos que funcionan sin conexión, muy usadas en la ayuda humanitaria.
 - [Kolibri](https://learningequality.org/kolibri/). Plataforma educativa que funciona sin conexión y sirve contenido por red local.
 - [Boxtribute](https://github.com/boxwise/boxtribute). Sistema humanitario de inventario basado en un servidor en internet (opción A).
 - [Relief Inventory](https://github.com/fiforms/reliefinventory). Inventario de donaciones para desastres, con una imagen para Raspberry Pi que funciona sin internet.
