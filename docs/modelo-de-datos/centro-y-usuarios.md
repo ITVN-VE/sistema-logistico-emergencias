@@ -4,55 +4,55 @@ Parte del [modelo de datos](README.md) del sistema de inventario: el centro de a
 
 ## Esquema
 
-Estas tablas están definidas en el [esquema](esquema.dbml) del modelo de datos, en las secciones *Centro* y *Acceso*. Este documento explica cada campo; el esquema es la definición exacta. Para verlas como diagrama, ver [cómo ver el esquema](README.md#el-esquema).
+Estas tablas están definidas en el [esquema](esquema.dbml) del modelo de datos, en las tablas `centers` y `users`. Este documento explica cada campo; el esquema es la definición exacta. Para verlas como diagrama, ver [cómo ver el esquema](README.md#el-esquema).
 
-## Centro
+## Centro (`centers`)
 
 El centro de acopio que usa esta instalación. Hay uno por instalación.
 
 | Campo | Tipo | Obligatorio | Descripción |
 |---|---|---|---|
 | `id` | UUID v7 | Sí | Identificador único del centro. Se genera al instalar. |
-| `nombre` | Texto | Sí | Por ejemplo, "Centro de acopio Parroquia San Juan". No es único: puede haber dos centros con el mismo nombre. |
-| `tipo` | Lista | Sí | Centro de acopio, albergue, punto de distribución u otro. Lista provisional, a confirmar en las entrevistas. |
-| `organizacion` | Texto | No | Quién opera el centro: una parroquia, una ONG, un consejo comunal… En la segunda etapa podrá convertirse en una tabla propia. |
-| `responsable_id` | Usuario | Sí | El contacto principal del centro. Debe ser un usuario con rol de coordinador. Al instalar es quien crea el centro, pero puede cambiar después. |
-| `pais` | Código ISO 3166-1 | Sí | Siempre `VE` por ahora. No se muestra en la pantalla. |
-| `entidad_federal` | Código ISO 3166-2 | Sí | Se elige de la [lista de entidades federales](#entidades-federales). |
-| `municipio` | Texto | Sí | Por ahora, texto libre. Ver *Preguntas abiertas*. |
-| `parroquia` | Texto | No | Por ahora, texto libre. |
-| `direccion` | Texto | No | Dirección del centro. |
-| `punto_referencia` | Texto | No | Por ejemplo, "frente a la panadería La Esquina". |
-| `telefono` | Texto | No | Teléfono de contacto del centro, en formato internacional: `+582121234567`. |
-| `situacion` | Lista | Sí | `activo`, `en_pausa` o `cerrado`. Un centro nunca se borra: se cierra. |
-| `creado_en` | Fecha y hora (UTC) | Sí | Cuándo se registró el centro en el sistema. Se rellena sola. |
-| `actualizado_en` | Fecha y hora (UTC) | Sí | Último cambio en los datos del centro. Se rellena sola. |
+| `name` | Texto | Sí | Por ejemplo, "Centro de acopio Parroquia San Juan". No es único: puede haber dos centros con el mismo nombre. |
+| `type` | Lista | Sí | `collection_center` (centro de acopio), `shelter` (albergue), `distribution_point` (punto de distribución) u `other`. Lista provisional, a confirmar en las entrevistas. |
+| `organization` | Texto | No | Quién opera el centro: una parroquia, una ONG, un consejo comunal… En la segunda etapa podrá convertirse en una tabla propia. |
+| `primary_contact_id` | Usuario | Sí | El responsable y contacto principal del centro. Debe ser un usuario con rol de coordinador. Al instalar es quien crea el centro, pero puede cambiar después. |
+| `country` | Código ISO 3166-1 | Sí | Siempre `VE` por ahora. No se muestra en la pantalla. |
+| `state` | Código ISO 3166-2 | Sí | La entidad federal. Se elige de la [lista de entidades federales](#entidades-federales). |
+| `municipality` | Texto | Sí | Por ahora, texto libre. Ver *Preguntas abiertas*. |
+| `parish` | Texto | No | Por ahora, texto libre. |
+| `address` | Texto | No | Dirección del centro. |
+| `landmark` | Texto | No | Punto de referencia. Por ejemplo, "frente a la panadería La Esquina". |
+| `phone` | Texto | No | Teléfono de contacto del centro, en formato internacional: `+582121234567`. |
+| `status` | Lista | Sí | `active` (activo), `paused` (en pausa) o `closed` (cerrado). Un centro nunca se borra: se cierra. |
+| `created_at` | Fecha y hora (UTC) | Sí | Cuándo se registró el centro en el sistema. Se rellena sola. |
+| `updated_at` | Fecha y hora (UTC) | Sí | Último cambio en los datos del centro. Se rellena sola. |
 
-## Usuario
+## Usuario (`users`)
 
 Cada persona que usa el sistema del centro: voluntarios y coordinadores. Cómo entran, cómo recuperan el acceso y qué puede hacer cada rol se explica en el [ADR-0003: Usuarios y acceso](../adr/0003-usuarios-y-acceso.md).
 
 | Campo | Tipo | Obligatorio | Descripción |
 |---|---|---|---|
 | `id` | UUID v7 | Sí | Identificador único del usuario. |
-| `nombre_completo` | Texto | Sí | Nombre y apellido. |
-| `telefono` | Texto | Sí | Con él entra al sistema. Obligatorio y único, en formato internacional: `+584141234567`. |
-| `correo` | Texto | No | Dato de contacto. Si se indica, es único. |
-| `rol` | Lista | Sí | `voluntario` o `coordinador`. |
-| `credencial_hash` | Texto | Sí | El PIN (voluntarios) o la contraseña (coordinadores), guardado con Argon2id. Nunca se guarda tal cual. |
-| `requiere_cambio` | Sí o no | Sí | Si es sí, al entrar debe elegir un PIN o una contraseña nuevos. Se usa cuando un coordinador le asigna uno temporal. |
-| `situacion` | Lista | Sí | `activo` o `desactivado`. Un usuario nunca se borra: se desactiva, y sus sesiones abiertas se cierran. |
-| `intentos_fallidos` | Número | Sí | Intentos de entrada fallidos seguidos. Vuelve a cero al entrar bien. |
-| `bloqueado_hasta` | Fecha y hora (UTC) | No | Si tiene valor, no puede entrar hasta esa hora. |
-| `ultimo_acceso` | Fecha y hora (UTC) | No | La última vez que entró. |
-| `creado_en` | Fecha y hora (UTC) | Sí | Se rellena sola. |
-| `actualizado_en` | Fecha y hora (UTC) | Sí | Se rellena sola. |
+| `full_name` | Texto | Sí | Nombre y apellido. |
+| `phone` | Texto | Sí | Con él entra al sistema. Obligatorio y único, en formato internacional: `+584141234567`. |
+| `email` | Texto | No | Dato de contacto. Si se indica, es único. |
+| `role` | Lista | Sí | `volunteer` (voluntario) o `coordinator` (coordinador). |
+| `credential_hash` | Texto | Sí | El PIN (voluntarios) o la contraseña (coordinadores), guardado con Argon2id. Nunca se guarda tal cual. |
+| `must_change_credential` | Sí o no | Sí | Si es sí, al entrar debe elegir un PIN o una contraseña nuevos. Se usa cuando un coordinador le asigna uno temporal. |
+| `status` | Lista | Sí | `active` (activo) o `deactivated` (desactivado). Un usuario nunca se borra: se desactiva, y sus sesiones abiertas se cierran. |
+| `failed_login_attempts` | Número | Sí | Intentos de entrada fallidos seguidos. Vuelve a cero al entrar bien. |
+| `locked_until` | Fecha y hora (UTC) | No | Si tiene valor, no puede entrar hasta esa hora. |
+| `last_login_at` | Fecha y hora (UTC) | No | La última vez que entró. |
+| `created_at` | Fecha y hora (UTC) | Sí | Se rellena sola. |
+| `updated_at` | Fecha y hora (UTC) | Sí | Se rellena sola. |
 
 No se guarda la fecha de nacimiento, la cédula ni otros datos personales que el sistema no necesita.
 
 ## Entidades federales
 
-Lista fija incluida en la aplicación, con los códigos de la norma [ISO 3166-2:VE](https://www.iso.org/obp/ui/#iso:code:3166:VE): 23 estados, el Distrito Capital y las Dependencias Federales. El campo `entidad_federal` guarda el código.
+Lista fija incluida en la aplicación, con los códigos de la norma [ISO 3166-2:VE](https://www.iso.org/obp/ui/#iso:code:3166:VE): 23 estados, el Distrito Capital y las Dependencias Federales. El campo `state` guarda el código, con la lista `ve_state` del esquema.
 
 | Código | Nombre |
 |---|---|

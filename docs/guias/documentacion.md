@@ -47,7 +47,7 @@ Si un documento no encaja en ninguno de estos tipos, conviene proponerlo en un *
 
 ## Estilo de redacción
 
-- **Idioma.** Los documentos se escriben en español. Las contribuciones a proyectos de terceros siguen el idioma y las normas de ese proyecto.
+- **Idioma.** Los documentos se escriben en español. El código y los nombres del modelo de datos (tablas, campos y valores) van en inglés, como se explica en las [convenciones del modelo de datos](../modelo-de-datos/README.md#convenciones). Las contribuciones a proyectos de terceros siguen el idioma y las normas de ese proyecto.
 - **Claro y directo.** Frases cortas, una idea por párrafo. El lector debe entender el documento sin haber participado en la discusión.
 - **Pensado para cualquiera.** Parte de la documentación la leerán coordinadores de centros de acopio y organizaciones, no solo desarrolladores. Si se usa un término técnico, se explica la primera vez.
 - **Siglas.** La primera vez que aparece una sigla se escribe completa: "ADR (*Architecture Decision Record*, registro de decisión de arquitectura)".
