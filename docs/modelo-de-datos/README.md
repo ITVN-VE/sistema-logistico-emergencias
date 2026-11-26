@@ -26,16 +26,34 @@ Para añadir uno nuevo, se crea un archivo en esta carpeta, con un nombre que di
 - **Una instalación, un centro.** Si un centro tiene varios galpones o salas, son ubicaciones dentro del mismo centro, no centros distintos.
 - **El centro se vincula al sistema central; el sistema central no lo crea.** Cuando exista el sistema central (segunda etapa), cada centro solicitará unirse a él ([planteamiento](../planteamiento.md), sección 5.4), y el diseño no debe impedir que un centro se vincule también a otros sistemas, como el de la organización con la que trabaja. Esa vinculación se diseñará en su momento, en una tabla propia, sin cambiar las tablas existentes.
 - **Identificadores únicos sin coordinación.** Todas las tablas usan como identificador un **UUID versión 7** ([RFC 9562](https://www.rfc-editor.org/rfc/rfc9562)): un número aleatorio que cada dispositivo genera solo, sin internet, y que en la práctica no se repite. Empieza por la fecha de creación, lo que mantiene los registros ordenados. Así, cuando los datos de muchos centros se unan en el sistema central, no habrá dos registros con el mismo identificador.
-- **Nada se borra.** Los registros no se eliminan: se cambia su `situacion` (por ejemplo, un centro se *cierra* y un usuario se *desactiva*). Así se conserva la historia completa y cada acción sigue atribuida a quien la hizo.
+- **Nada se borra.** Los registros no se eliminan: se cambia su `status` (por ejemplo, un centro se *cierra* y un usuario se *desactiva*). Así se conserva la historia completa y cada acción sigue atribuida a quien la hizo.
 - **Se guarda solo lo necesario.** Cada dato personal que no se guarda es un dato que no se puede filtrar. Antes de añadir un campo con información sobre personas, hay que poder explicar para qué se usa.
 - **Códigos, no nombres.** Cuando un dato viene de una lista (el estado, el rol, la situación), se guarda su código y no el texto que se muestra. Así las estadísticas no dependen de cómo se escribió cada nombre.
 - **Fechas en UTC.** Las fechas y horas se guardan en tiempo universal (UTC) y la pantalla las muestra en la hora de Venezuela (UTC−4).
 
 ## Convenciones
 
-- Los nombres de tablas y campos van en español, en minúsculas, con guiones bajos y sin tildes ni eñes: `punto_referencia`, `actualizado_en`.
-- Los campos que apuntan a otra tabla terminan en `_id`: `responsable_id`.
+- **Los nombres de tablas, campos y valores de las listas van en inglés**, igual que el código. La documentación y las notas del esquema van en español. El [glosario](#glosario) relaciona cada término con su nombre en el modelo.
+- Todo en minúsculas y con guiones bajos (*snake_case*): `primary_contact_id`, `created_at`.
+- **Las tablas en plural:** `centers`, `users`. Así se evitan palabras reservadas de SQL, como `user`.
+- Los campos que apuntan a otra tabla terminan en `_id`: `primary_contact_id`.
+- Las fechas y horas terminan en `_at` (`created_at`, `last_login_at`), salvo las que marcan un límite, como `locked_until`.
 - Los tipos se describen de forma general (texto, número, fecha y hora). El tipo concreto depende de la base de datos que se elija.
+
+## Glosario
+
+| Término | En el modelo |
+|---|---|
+| Centro de acopio | `centers` (tabla), `collection_center` (tipo de centro) |
+| Responsable del centro | `primary_contact_id` |
+| Entidad federal (estado) | `state`, con la lista `ve_state` |
+| Municipio, parroquia | `municipality`, `parish` |
+| Punto de referencia | `landmark` |
+| Situación (activo, en pausa, cerrado…) | `status` |
+| Usuario | `users` |
+| Voluntario, coordinador | `volunteer`, `coordinator` (lista `user_role`) |
+| PIN o contraseña | `credential_hash` (solo su resultado con Argon2id) |
+| Desactivado | `deactivated` |
 
 ## Pendiente de diseñar
 
@@ -45,4 +63,4 @@ Para añadir uno nuevo, se crea un archivo en esta carpeta, con un nombre que di
 
 ## Preguntas abiertas
 
-- ¿Deben las tablas llevar el identificador del centro (`centro_id`) para facilitar el envío de datos al sistema central, aunque cada instalación tenga un solo centro?
+- ¿Deben las tablas llevar el identificador del centro (`center_id`) para facilitar el envío de datos al sistema central, aunque cada instalación tenga un solo centro?

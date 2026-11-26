@@ -1,49 +1,50 @@
 // Esquema del modelo de datos del sistema de inventario.
 // Es la fuente del modelo: los documentos de esta carpeta lo explican.
+// Los nombres de tablas, campos y valores van en inglés; las notas, en español.
 // Para verlo como diagrama, pegar este archivo en https://dbdiagram.io
 
-Project sistema_logistico_emergencias {
+Project emergency_logistics {
   Note: 'Sistema de inventario de un centro de acopio. Una instalación, un centro. Ver docs/modelo-de-datos/README.md'
 }
 
 // ---------- Centro ----------
 
-Table centro {
+Table centers {
   id uuid [pk, note: 'UUIDv7. Se genera al instalar.']
-  nombre varchar [not null, note: 'No es único: puede haber dos centros con el mismo nombre.']
-  tipo tipo_centro [not null]
-  organizacion varchar [note: 'Quién opera el centro. En la segunda etapa podrá ser una tabla propia.']
-  responsable_id uuid [not null, ref: > usuario.id, note: 'Contacto principal. Debe ser un coordinador.']
-  pais varchar(2) [not null, default: 'VE', note: 'ISO 3166-1. Siempre VE por ahora.']
-  entidad_federal entidad_federal [not null, note: 'Código ISO 3166-2.']
-  municipio varchar [not null, note: 'Texto libre por ahora.']
-  parroquia varchar
-  direccion varchar
-  punto_referencia varchar [note: 'Ej.: frente a la panadería La Esquina.']
-  telefono varchar [note: 'Formato internacional: +582121234567.']
-  situacion situacion_centro [not null, default: 'activo', note: 'Un centro nunca se borra: se cierra.']
-  creado_en timestamp [not null, note: 'UTC.']
-  actualizado_en timestamp [not null, note: 'UTC.']
+  name varchar [not null, note: 'No es único: puede haber dos centros con el mismo nombre.']
+  type center_type [not null]
+  organization varchar [note: 'Quién opera el centro. En la segunda etapa podrá ser una tabla propia.']
+  primary_contact_id uuid [not null, ref: > users.id, note: 'Responsable del centro. Debe ser un coordinador.']
+  country varchar(2) [not null, default: 'VE', note: 'ISO 3166-1. Siempre VE por ahora.']
+  state ve_state [not null, note: 'Entidad federal, código ISO 3166-2.']
+  municipality varchar [not null, note: 'Texto libre por ahora.']
+  parish varchar [note: 'Parroquia.']
+  address varchar
+  landmark varchar [note: 'Punto de referencia. Ej.: frente a la panadería La Esquina.']
+  phone varchar [note: 'Formato internacional: +582121234567.']
+  status center_status [not null, default: 'active', note: 'Un centro nunca se borra: se cierra.']
+  created_at timestamp [not null, note: 'UTC.']
+  updated_at timestamp [not null, note: 'UTC.']
 
   Note: 'El centro de acopio que usa esta instalación. Hay uno por instalación.'
 }
 
 // Lista provisional, a confirmar en las entrevistas.
-Enum tipo_centro {
-  centro_de_acopio
-  albergue
-  punto_de_distribucion
-  otro
+Enum center_type {
+  collection_center [note: 'Centro de acopio']
+  shelter [note: 'Albergue']
+  distribution_point [note: 'Punto de distribución']
+  other [note: 'Otro']
 }
 
-Enum situacion_centro {
-  activo
-  en_pausa
-  cerrado
+Enum center_status {
+  active [note: 'Activo']
+  paused [note: 'En pausa']
+  closed [note: 'Cerrado']
 }
 
 // ISO 3166-2:VE: 23 estados, el Distrito Capital y las Dependencias Federales.
-Enum entidad_federal {
+Enum ve_state {
   "VE-A" [note: 'Distrito Capital']
   "VE-B" [note: 'Anzoátegui']
   "VE-C" [note: 'Apure']
@@ -73,39 +74,39 @@ Enum entidad_federal {
 
 // ---------- Acceso (ADR-0003) ----------
 
-Table usuario {
+Table users {
   id uuid [pk, note: 'UUIDv7.']
-  nombre_completo varchar [not null]
-  telefono varchar [not null, unique, note: 'Con él entra al sistema. Formato internacional: +584141234567.']
-  correo varchar [unique, note: 'Opcional. Solo dato de contacto.']
-  rol rol_usuario [not null]
-  credencial_hash varchar [not null, note: 'PIN o contraseña con Argon2id. Nunca se guarda tal cual.']
-  requiere_cambio boolean [not null, default: false, note: 'Debe elegir un PIN o una contraseña nuevos al entrar.']
-  situacion situacion_usuario [not null, default: 'activo', note: 'Un usuario nunca se borra: se desactiva.']
-  intentos_fallidos int [not null, default: 0]
-  bloqueado_hasta timestamp [note: 'UTC. Si tiene valor, no puede entrar hasta esa hora.']
-  ultimo_acceso timestamp [note: 'UTC.']
-  creado_en timestamp [not null, note: 'UTC.']
-  actualizado_en timestamp [not null, note: 'UTC.']
+  full_name varchar [not null, note: 'Nombre y apellido.']
+  phone varchar [not null, unique, note: 'Con él entra al sistema. Formato internacional: +584141234567.']
+  email varchar [unique, note: 'Opcional. Solo dato de contacto.']
+  role user_role [not null]
+  credential_hash varchar [not null, note: 'PIN o contraseña con Argon2id. Nunca se guarda tal cual.']
+  must_change_credential boolean [not null, default: false, note: 'Debe elegir un PIN o una contraseña nuevos al entrar.']
+  status user_status [not null, default: 'active', note: 'Un usuario nunca se borra: se desactiva.']
+  failed_login_attempts int [not null, default: 0, note: 'Intentos de entrada fallidos seguidos.']
+  locked_until timestamp [note: 'UTC. Si tiene valor, no puede entrar hasta esa hora.']
+  last_login_at timestamp [note: 'UTC.']
+  created_at timestamp [not null, note: 'UTC.']
+  updated_at timestamp [not null, note: 'UTC.']
 
   Note: 'Cada persona que usa el sistema del centro: voluntarios y coordinadores.'
 }
 
-Enum rol_usuario {
-  voluntario
-  coordinador
+Enum user_role {
+  volunteer [note: 'Voluntario']
+  coordinator [note: 'Coordinador']
 }
 
-Enum situacion_usuario {
-  activo
-  desactivado
+Enum user_status {
+  active [note: 'Activo']
+  deactivated [note: 'Desactivado']
 }
 
-TableGroup centro_de_acopio {
-  centro
+TableGroup center {
+  centers
 }
 
 // Usuarios y acceso (ADR-0003).
-TableGroup acceso {
-  usuario
+TableGroup access {
+  users
 }
