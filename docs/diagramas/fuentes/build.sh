@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compila los diagramas de los ADR y guarda las imágenes PNG en la carpeta diagramas/.
+# Compila los diagramas de la documentación y guarda las imágenes PNG en docs/diagramas/.
 # Uso: ./build.sh            (todos los diagramas)
 #      ./build.sh replica    (solo replica.tex)
 set -euo pipefail

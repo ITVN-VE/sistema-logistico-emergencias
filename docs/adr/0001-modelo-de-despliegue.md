@@ -77,7 +77,7 @@ Cada dispositivo usa una aplicación web instalable que guarda los datos en el p
 
 El centro instala la aplicación con doble clic en una computadora. Esa computadora funciona como **servidor local**: guarda los datos y los sirve por la red local (Wi-Fi), sin internet. El resto de dispositivos del centro se conectan a ella desde el navegador, por ejemplo escaneando un código QR que muestra la pantalla, sin instalar nada.
 
-![Modelo de despliegue: la computadora del centro de acopio funciona como servidor local y los voluntarios se conectan a ella por la red local, sin internet](diagramas/despliegue.png)
+![Modelo de despliegue: la computadora del centro de acopio funciona como servidor local y los voluntarios se conectan a ella por la red local, sin internet](../diagramas/despliegue.png)
 
 Es una sola aplicación con dos papeles:
 
@@ -139,7 +139,7 @@ La decisión queda en estado **Propuesto** hasta validar en las entrevistas con 
   - **Pérdida o daño de la computadora:** ofrecer copias de seguridad en un pendrive. Cómo sigue trabajando el centro cuando falla su servidor local, y cómo se recupera, se trata en el [ADR-0002](0002-continuidad-del-servidor-local.md).
   - **Cortes eléctricos:** preferir portátiles con batería y que la aplicación consuma poco. Si la computadora se apaga, otro dispositivo puede tomar su lugar como servidor ([ADR-0002](0002-continuidad-del-servidor-local.md)).
   - **Escaneo de QR sin HTTPS:** permitir siempre escribir a mano el número de la caja y estudiar el uso de certificados locales.
-  - **Acceso no autorizado desde la red local:** exigir usuario y PIN para cada persona, gestionados desde la computadora del centro.
+  - **Acceso no autorizado desde la red local:** exigir una cuenta personal con PIN o contraseña para cada persona, gestionada desde el propio centro ([ADR-0003](0003-usuarios-y-acceso.md)).
 
 ## Preguntas abiertas
 
