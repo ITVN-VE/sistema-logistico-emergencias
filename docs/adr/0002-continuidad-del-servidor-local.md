@@ -6,7 +6,7 @@
 - **Fecha límite para decidir:** al terminar las entrevistas con centros de acopio de la fase de investigación
 - **Autor:** Aureliano Aristizabal ([arstbltech](https://github.com/arstbltech))
 - **Participantes:** pendiente
-- **Relacionado con:** [ADR-0001: Modelo de despliegue](0001-modelo-de-despliegue.md)
+- **Relacionado con:** [ADR-0001: Modelo de despliegue](0001-modelo-de-despliegue.md); [ADR-0004: Red local del centro](0004-red-local-del-centro.md)
 
 ## Contexto y problema
 
@@ -104,7 +104,7 @@ Es la única opción que permite recuperarse en minutos sin arriesgar que el inv
 - **Turnos.** Cada vez que un dispositivo se convierte en servidor, el **turno** aumenta en uno. Cada entrada del registro guarda el turno en que se creó.
   - Los clientes y la réplica solo aceptan órdenes del servidor con el turno más alto que conocen.
   - Un servidor que descubre un turno mayor que el suyo deja de aceptar registros y pasa a ser réplica.
-- **Confirmación de registros.** Mientras la réplica está conectada, el servidor solo confirma un registro al voluntario cuando la réplica ya lo tiene. Si la réplica se desconecta, el servidor sigue funcionando solo y muestra un aviso de **«Sin réplica»**.
+- **Confirmación de registros.** Mientras la réplica está conectada, el servidor solo confirma un registro al voluntario cuando la réplica ya lo tiene. Si la réplica se desconecta o no responde en un tiempo máximo (por ejemplo, 2 segundos), el servidor confirma igual, sigue funcionando solo y muestra un aviso de **«Sin réplica»**. Así una réplica con poca señal nunca frena a los voluntarios ([ADR-0004](0004-red-local-del-centro.md)).
 - **Cambio de servidor.** Solo un usuario con rol de coordinador puede convertir la réplica en servidor. Antes de hacerlo, el sistema le pide que confirme que la computadora está apagada o inaccesible.
 - **Regreso del servidor anterior.** Cuando la computadora vuelve, ve que hay un turno mayor y pasa a ser réplica. Si tenía registros que no llegó a copiar, no se descartan: se muestran al coordinador como **«registros pendientes de revisar»** para que decida si se incorporan.
 - **Descubrimiento.** El servidor se anuncia en la red local para que los clientes lo encuentren solos. Además muestra un código QR con su dirección.

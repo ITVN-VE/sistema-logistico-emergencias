@@ -9,3 +9,4 @@ Para escribir uno nuevo, sigue la guía [Cómo escribir un ADR](../guias/adr.md)
 | [0001](0001-modelo-de-despliegue.md) | Modelo de despliegue | Propuesto | 2026-11-24 |
 | [0002](0002-continuidad-del-servidor-local.md) | Continuidad del servidor local | Propuesto | 2026-11-24 |
 | [0003](0003-usuarios-y-acceso.md) | Usuarios y acceso | Propuesto | 2026-11-25 |
+| [0004](0004-red-local-del-centro.md) | Red local del centro | Propuesto | 2026-11-26 |
