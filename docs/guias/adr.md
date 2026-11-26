@@ -36,7 +36,7 @@ Un ADR puede quedarse en **Propuesto** mientras falte información para decidir,
 
 ## Proceso
 
-1. **Crear una rama.** Por ejemplo `adr/0003-tecnologia-de-la-aplicacion`.
+1. **Crear una rama.** Por ejemplo `adr/0004-tecnologia-de-la-aplicacion`.
 2. **Copiar la plantilla.** Copiar [`plantilla.md`](../adr/plantilla.md) en `docs/adr/` con el siguiente número libre y el título de la decisión.
 3. **Redactarlo.** Rellenar todas las secciones (ver abajo) y dejar el estado en **Propuesto**.
 4. **Añadirlo al índice.** Agregar una fila en [`docs/adr/README.md`](../adr/README.md).
