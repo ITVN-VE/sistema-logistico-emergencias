@@ -49,7 +49,7 @@ Un dispositivo autorizado **con la aplicación instalada**, como la tablet del c
 
 Un dispositivo que solo usa el navegador no puede ser réplica, porque el navegador no guarda el inventario completo de forma segura ni puede ofrecerlo a los demás dispositivos.
 
-![Réplica con cambio manual: funcionamiento normal, fallo de la computadora y regreso de la computadora como réplica](diagramas/replica.png)
+![Réplica con cambio manual: funcionamiento normal, fallo de la computadora y regreso de la computadora como réplica](../diagramas/replica.png)
 
 - **Ventajas:**
   - El centro se recupera en minutos y sin conocimientos técnicos (cumple el criterio 3).
@@ -133,6 +133,8 @@ Otro caso es que el equipo funcione pero falte la persona: si el único coordina
 
 - **Hoja de recuperación.** Al instalar el sistema se genera un código de recuperación, como los códigos de respaldo de la verificación en dos pasos. Se imprime o se fotografía, y lo guarda el responsable de la organización (por ejemplo, el párroco, el director o la junta directiva). Con ese código, otra persona puede tomar el rol de coordinador.
 - **Dos coordinadores por centro.** El sistema recomienda, sin obligar, que cada centro tenga al menos dos personas con rol de coordinador.
+
+Cómo entran las personas al sistema y cómo se recupera el acceso de voluntarios y coordinadores se trata en el [ADR-0003](0003-usuarios-y-acceso.md).
 
 ### Garantías del protocolo
 

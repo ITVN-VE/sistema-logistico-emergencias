@@ -35,6 +35,7 @@ Se desarrollarán por etapas:
 - [Planteamiento del problema y propuesta (español)](docs/planteamiento.md)
 - [Problem statement and proposal (English)](docs/proposal-en.md)
 - [Decisiones de arquitectura](docs/adr/README.md)
+- [Modelo de datos](docs/modelo-de-datos/README.md)
 
 ## Base tecnológica
 

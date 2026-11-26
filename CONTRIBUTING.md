@@ -22,6 +22,7 @@ Lee los documentos en este orden:
 1. [README](README.md): qué es el proyecto, en pocas líneas.
 2. [Planteamiento del problema y propuesta](docs/planteamiento.md): el problema, los objetivos, el alcance y las preguntas abiertas.
 3. [Decisiones de arquitectura](docs/adr/README.md): qué se ha decidido hasta ahora y por qué.
+4. [Modelo de datos](docs/modelo-de-datos/README.md): qué información guarda el sistema y cómo se organiza.
 
 ## Cómo se trabaja
 
@@ -35,7 +36,7 @@ Nadie trabaja directamente en `main`. Cada cambio se hace en una rama propia, co
 
 | Prefijo | Para qué | Ejemplo |
 |---|---|---|
-| `adr/` | Una decisión de arquitectura | `adr/0003-tecnologia-de-la-aplicacion` |
+| `adr/` | Una decisión de arquitectura | `adr/0004-tecnologia-de-la-aplicacion` |
 | `docs/` | Cambios en la documentación | `docs/guia-de-entrevistas` |
 | `feat/` | Una funcionalidad nueva | `feat/registro-de-cajas` |
 | `fix/` | La corrección de un error | `fix/fecha-de-vencimiento` |
@@ -48,7 +49,7 @@ El mensaje empieza con un prefijo que indica el tipo de cambio, en minúsculas y
 
 | Prefijo | Para qué | Ejemplo |
 |---|---|---|
-| `add:` | Añadir algo nuevo | `add: ADR-0003 tecnología de la aplicación` |
+| `add:` | Añadir algo nuevo | `add: ADR-0004 tecnología de la aplicación` |
 | `update:` | Modificar algo que ya existe | `update: preguntas abiertas del ADR-0001` |
 | `fix:` | Corregir un error | `fix: enlace roto al planteamiento` |
 | `remove:` | Eliminar algo | `remove: diagrama que ya no se usa` |
