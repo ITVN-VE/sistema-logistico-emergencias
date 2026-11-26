@@ -6,7 +6,7 @@
 - **Fecha límite para decidir:** al terminar las entrevistas con centros de acopio de la fase de investigación
 - **Autor:** Aureliano Aristizabal ([arstbltech](https://github.com/arstbltech))
 - **Participantes:** pendiente
-- **Relacionado con:** [ADR-0001: Modelo de despliegue](0001-modelo-de-despliegue.md); [ADR-0002: Continuidad del servidor local](0002-continuidad-del-servidor-local.md); [Modelo de datos](../modelo-de-datos/centro-y-usuarios.md)
+- **Relacionado con:** [ADR-0001: Modelo de despliegue](0001-modelo-de-despliegue.md); [ADR-0002: Continuidad del servidor local](0002-continuidad-del-servidor-local.md); [ADR-0004: Red local del centro](0004-red-local-del-centro.md); [Modelo de datos](../modelo-de-datos/centro-y-usuarios.md)
 
 ## Contexto y problema
 
@@ -25,7 +25,7 @@ El ADR-0001 ya indica, como mitigación de un riesgo, que cada persona entre con
 
 ### Fuera del alcance de este ADR
 
-- **La protección de la conexión en la red local** (HTTPS). Sin ella, el PIN viaja sin cifrar por el Wi-Fi. Se decidirá en un ADR propio, porque afecta también al escaneo de códigos QR y a la instalación de la aplicación.
+- **La protección de la conexión en la red local** (HTTPS). Sin ella, el PIN viaja sin cifrar por el Wi-Fi. Se decide en el [ADR-0004](0004-red-local-del-centro.md), porque afecta también a otras funciones del navegador y a la instalación de la aplicación.
 - **Las cuentas en el sistema central** y la verificación de los responsables de cada centro, que corresponden a la segunda etapa (planteamiento, sección 5.4).
 - **La tecnología concreta** con que se implementa (lenguaje, librerías), que se decidirá en el ADR de tecnología de la aplicación.
 - **La lista detallada de permisos** de cada rol, que se definirá al diseñar cada pantalla.
@@ -150,7 +150,7 @@ En el último caso no se pierde el inventario y los voluntarios pueden seguir tr
   - Si un centro pierde a la vez todo acceso de coordinador y la hoja de recuperación, queda sin poder administrar el sistema.
   - Como el teléfono es obligatorio, quien no tenga teléfono propio o no quiera dar su número no puede tener una cuenta.
 - **Riesgos y cómo mitigarlos:**
-  - **Alguien en el Wi-Fi del centro captura un PIN**, porque sin HTTPS viaja sin cifrar: usar un Wi-Fi con contraseña y decidir la protección de la conexión en su propio ADR.
+  - **Alguien en el Wi-Fi del centro captura un PIN**, porque sin HTTPS viaja sin cifrar: usar un Wi-Fi con contraseña, como propone el [ADR-0004](0004-red-local-del-centro.md).
   - **Roban o se pierde la computadora del servidor:** las claves no se pueden leer porque solo se guarda su resultado con Argon2id. Para proteger el resto de los datos, recomendar el cifrado de disco del sistema operativo y estudiar el cifrado de la base de datos en el ADR de tecnología.
   - **Un voluntario usa la cuenta de otro**, por ejemplo con un teléfono prestado y la sesión abierta: cerrar las sesiones tras un tiempo sin uso y explicar al dar de alta que cada cuenta es personal.
   - **Un coordinador abusa de su rol:** todas sus acciones quedan registradas y no puede borrarlas; con dos coordinadores, cada uno ve lo que hace el otro.

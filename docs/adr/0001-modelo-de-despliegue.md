@@ -6,7 +6,7 @@
 - **Fecha límite para decidir:** al terminar las entrevistas con centros de acopio de la fase de investigación
 - **Autor:** Aureliano Aristizabal ([arstbltech](https://github.com/arstbltech))
 - **Participantes:** pendiente
-- **Relacionado con:** [Planteamiento](../planteamiento.md), secciones 5.3 (Etapas de desarrollo), 7 (Condiciones de operación) y 9 (Pregunta abierta 3); [ADR-0002: Continuidad del servidor local](0002-continuidad-del-servidor-local.md)
+- **Relacionado con:** [Planteamiento](../planteamiento.md), secciones 5.3 (Etapas de desarrollo), 7 (Condiciones de operación) y 9 (Pregunta abierta 3); [ADR-0002: Continuidad del servidor local](0002-continuidad-del-servidor-local.md); [ADR-0004: Red local del centro](0004-red-local-del-centro.md)
 
 ## Contexto y problema
 
@@ -98,7 +98,7 @@ Los roles de las personas (voluntario, coordinador) no dependen del dispositivo.
 - **Inconvenientes:**
   - Hace falta una computadora encendida mientras se trabaja. Si se apaga o se queda sin batería, los demás dispositivos no pueden registrar.
   - Es más complejo de desarrollar que la opción A: hay que construir el servidor local y el empaquetado para cada sistema operativo.
-  - El uso de la cámara del teléfono desde el navegador (para escanear códigos QR) exige HTTPS, que es difícil de tener en una red local sin internet.
+  - Algunas funciones del navegador, como el uso de la cámara o el funcionamiento sin conexión, exigen HTTPS, que es difícil de tener en una red local sin internet.
   - Las actualizaciones no llegan solas a las instalaciones que pasan mucho tiempo sin conexión.
 
 ### Comparación
@@ -138,7 +138,7 @@ La decisión queda en estado **Propuesto** hasta validar en las entrevistas con 
 - **Riesgos y cómo mitigarlos:**
   - **Pérdida o daño de la computadora:** ofrecer copias de seguridad en un pendrive. Cómo sigue trabajando el centro cuando falla su servidor local, y cómo se recupera, se trata en el [ADR-0002](0002-continuidad-del-servidor-local.md).
   - **Cortes eléctricos:** preferir portátiles con batería y que la aplicación consuma poco. Si la computadora se apaga, otro dispositivo puede tomar su lugar como servidor ([ADR-0002](0002-continuidad-del-servidor-local.md)).
-  - **Escaneo de QR sin HTTPS:** permitir siempre escribir a mano el número de la caja y estudiar el uso de certificados locales.
+  - **Funciones del navegador que exigen HTTPS:** no depender de ellas en la primera etapa. La protección de la conexión se trata en el [ADR-0004](0004-red-local-del-centro.md).
   - **Acceso no autorizado desde la red local:** exigir una cuenta personal con PIN o contraseña para cada persona, gestionada desde el propio centro ([ADR-0003](0003-usuarios-y-acceso.md)).
 
 ## Preguntas abiertas
