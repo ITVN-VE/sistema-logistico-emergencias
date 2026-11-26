@@ -2,9 +2,9 @@
 
 Parte del [modelo de datos](README.md) del sistema de inventario: el centro de acopio que usa cada instalación y las personas que trabajan con el sistema. Sigue los [principios y convenciones](README.md#principios) comunes.
 
-## Diagrama
+## Esquema
 
-![Centro y usuarios: el centro guarda su identidad, su ubicación y su situación, y apunta a un usuario coordinador como responsable y a la lista fija de entidades federales](../diagramas/centro-y-usuarios.png)
+Estas tablas están definidas en el [esquema](esquema.dbml) del modelo de datos, en las secciones *Centro* y *Acceso*. Este documento explica cada campo; el esquema es la definición exacta. Para verlas como diagrama, ver [cómo ver el esquema](README.md#el-esquema).
 
 ## Centro
 
